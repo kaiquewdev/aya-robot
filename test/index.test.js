@@ -223,4 +223,43 @@ describe('Aya robot', function () {
   it('should have a direction key', function () {
     robot.direction.should.be.eql('N');
   });
+
+  it('should be the clockwise order in directions', function () {
+    var directions = ['N', 'W', 'S', 'E'];
+
+    robot.directions.should.be.eql(directions);
+  });
+});
+
+describe('Aya robot movement', function () {
+  var grid = new aya.Grid({ width: 10, height: 10 });
+  var position = new aya.Position({ x: 1, y: 1, grid: grid });
+  var robot = new aya.Robot({ direction: 'N', position: position });
+
+  it('should be rotate to right', function () {
+    robot.rotateRight().direction.should.be.eql('W');
+    robot.rotateRight().direction.should.be.eql('S');
+    robot.rotateRight().direction.should.be.eql('E');
+    robot.rotateRight().direction.should.be.eql('N');
+  });
+
+  it('should be rotate to left', function () {
+    robot.rotateLeft().direction.should.be.eql('E');
+    robot.rotateLeft().direction.should.be.eql('S');
+    robot.rotateLeft().direction.should.be.eql('W');
+    robot.rotateLeft().direction.should.be.eql('N');
+  });
+
+  it('should be move one step ahead', function () {
+    robot.move().position.y.should.be.eql(2);
+    robot.rotateRight().move().position.x.should.be.eql(2);
+    robot.rotateRight().move().position.y.should.be.eql(1);
+    robot.rotateRight().move().position.x.should.be.eql(1);
+  });
+
+  it('should be teletransport', function () {
+    robot.teletransport(5, 5);
+    robot.position.x.should.be.eql(5);
+    robot.position.y.should.be.eql(5);
+  });
 });
