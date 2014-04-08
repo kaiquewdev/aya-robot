@@ -2,12 +2,13 @@
   "name": "aya-robot",
   "version": "0.0.0",
   "description": "Programming puzzle",
+  "bin": "./bin/aya.js"
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/*.test.js"
   },
   "repository": {
     "type": "git",
