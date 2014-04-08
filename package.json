@@ -1,6 +1,6 @@
 {
   "name": "aya-robot",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Programming puzzle",
   "bin": "./bin/aya.js"
   "main": "index.js",
