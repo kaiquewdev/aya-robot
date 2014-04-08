@@ -255,11 +255,49 @@ describe('Aya robot movement', function () {
     robot.rotateRight().move().position.x.should.be.eql(2);
     robot.rotateRight().move().position.y.should.be.eql(1);
     robot.rotateRight().move().position.x.should.be.eql(1);
+    robot.rotateRight().direction.should.eql('N');
   });
 
   it('should be teletransport', function () {
-    robot.teletransport(5, 5);
+    robot.teletransport({ x: 5, y: 5 });
     robot.position.x.should.be.eql(5);
     robot.position.y.should.be.eql(5);
+  });
+
+  it('should be a rotate right command', function () {
+    robot.command('R').direction.should.be.eql('W');
+    robot.command('R').direction.should.be.eql('S');
+    robot.command('R').direction.should.be.eql('E');
+    robot.command('R').direction.should.be.eql('N');
+  });
+
+  it('should be a rotate left command', function () {
+    robot.command('L').direction.should.be.eql('E');
+    robot.command('L').direction.should.be.eql('S');
+    robot.command('L').direction.should.be.eql('W');
+    robot.command('L').direction.should.be.eql('N');
+  });
+
+  it('should be a teletransport command', function () {
+    robot.command('T', { x: 1, y: 1 });
+    robot.position.x.should.be.eql(1);
+    robot.position.y.should.be.eql(1);
+  });
+
+  it('should be a move command', function () {
+    robot.command('M').position.y.should.be.eql(2);
+    robot.command('R').command('M').position.x.should.be.eql(2);
+    robot.command('R').command('M').position.y.should.be.eql(1);
+    robot.command('R').command('M').position.x.should.be.eql(1);
+    robot.command('R').direction.should.eql('N');
+  });
+
+  it('should be a batch of movements', function () {
+    robot.batch('MRM');
+    robot.position.should.have.property('y', 2);
+    robot.position.should.have.property('x', 2);
+    robot.batch('RMRMR');
+    robot.position.should.have.property('y', 1);
+    robot.position.should.have.property('x', 1);
   });
 });
