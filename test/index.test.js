@@ -117,3 +117,59 @@ describe('Aya position', function () {
     position.grid.should.be.an.instanceof(aya.Grid);
   });
 });
+
+describe('Aya position movement', function () {
+  var grid = new aya.Grid({ width: 10, height: 10 });
+  var position = new aya.Position({ x: 1, y: 1, grid: grid });
+
+  it('should be throw an error if not greater than or equal grid min width size', function () {
+    var actual = (function () { position.moveX(-1); });
+
+    actual
+      .should
+      .throwError('The x position should be grant than or equal the grid min width: ' + grid.width);
+  });
+
+  it('should be throw an error if not less than or equal grid max width size', function () {
+    var actual = (function () { position.moveX(11); });
+
+    actual
+      .should
+      .throwError('The x position should be less than or equal the grid max width: ' + grid.width);
+  });
+
+  it('should be move in x', function () {
+    position
+      .moveX(2)
+      .x.should.be.eql(2);
+  });
+
+  it('should be throw an error if not greater than or equal grid min height size', function () {
+    var actual = (function () { position.moveY(-1); });
+
+    actual
+      .should
+      .throwError('The y position should be grant than or equal the grid min height: ' + grid.height);
+  });
+
+  it('should be throw an error if not less than or equal grid max height size', function () {
+    var actual = (function () { position.moveY(11); });
+
+    actual
+      .should
+      .throwError('The y position should be less than or equal the grid max height: ' + grid.height);
+  });
+
+  it('should be move in y', function () {
+    position
+      .moveY(2)
+      .y.should.be.eql(2);
+  });
+
+  it('should be move in both axis', function () {
+    var actual = position.move({ x: 1, y: 1 });
+
+    actual.x.should.be.eql(1);
+    actual.y.should.be.eql(1);
+  });
+});
