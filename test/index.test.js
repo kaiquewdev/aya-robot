@@ -173,3 +173,54 @@ describe('Aya position movement', function () {
     actual.y.should.be.eql(1);
   });
 });
+
+describe('Aya robot', function () {
+  var grid = new aya.Grid({ width: 10, height: 10 });
+  var position = new aya.Position({ x: 1, y: 1, grid: grid });
+  var robot = null; 
+
+  it('should be throw an error if not has an instace of position', function () {
+    var actual = (function () { new aya.Robot({ direction: 'N' }) });
+
+    actual
+      .should
+      .be
+      .an
+      .throwError('You need to pass an position instance as argument.');
+  });
+
+  it('should be throw an error if you not define an direction', function () {
+    var actual = (function () { new aya.Robot({ position: position }) });
+
+    actual
+      .should
+      .be
+      .an
+      .throwError('You need to pass an direction as argument.');
+  });
+
+  it('should be throw an error if you not define a correct direction', function () {
+    var directions = ['N', 'W', 'S', 'E'];
+    var actual = (function () { new aya.Robot({ direction: 'G', position: position }) });
+
+    actual
+      .should
+      .be
+      .an
+      .throwError('You need to pass an correct direction like: ' + directions.join(', '));
+  });
+
+  it('should be an instance of robot', function () {
+    robot = new aya.Robot({ direction: 'N', position: position });
+
+    robot.should.be.an.instanceof(aya.Robot);
+  });
+
+  it('should have an instance of position', function () {
+    robot.position.should.be.an.instanceof(aya.Position);
+  });
+
+  it('should have a direction key', function () {
+    robot.direction.should.be.eql('N');
+  });
+});
